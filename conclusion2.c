@@ -14,8 +14,29 @@
 //  printf("ang\n");
 // }
 // }
+int waitingForInputField()
+{
+  HWND activeWindow = GetFocus();
+  CURSORINFO cursorInfo;
+  cursorInfo.cbSize = sizeof(CURSORINFO);
 
-int makar()
+  if (GetCursorInfo(&cursorInfo))
+  {
+    if (cursorInfo.flags & CURSOR_SHOWING && cursorInfo.hCursor == LoadCursor(NULL, IDC_IBEAM))
+    {
+      return 1;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+  else
+  {
+    return 0;
+  }
+}
+int checkingForLayoutLanguage()
 {
   HWND foregroundWindow = GetForegroundWindow();
   DWORD threadId = GetWindowThreadProcessId(foregroundWindow, NULL);
@@ -23,6 +44,12 @@ int makar()
   int keyboardLayoutId = (int)keyboardLayout & 0xFFFF; // Получение нижних 16 бит
   Sleep(30);
   //   printf("Iz=0x%04X\n", keyboardLayoutId);
+  int cursor_state = 0;
+  do
+  {
+    cursor_state = 0;
+    cursor_state = waitingForInputField();
+  } while (cursor_state == 0);
   return keyboardLayoutId;
 }
 void keyboard(char password[], int i, int registr)
@@ -44,7 +71,7 @@ void keyboard(char password[], int i, int registr)
     do
     {
       PostMessage(GetForegroundWindow(), WM_INPUTLANGCHANGEREQUEST, 1, 0x04190419);
-      keyboardLayoutId = makar();
+      keyboardLayoutId = checkingForLayoutLanguage();
     } while (keyboardLayoutId != 1049);
     // printf("rus=%d\n",keyboardLayoutId);
   }
@@ -53,7 +80,7 @@ void keyboard(char password[], int i, int registr)
     do
     {
       PostMessage(GetForegroundWindow(), WM_INPUTLANGCHANGEREQUEST, 1, 0x04090409);
-      keyboardLayoutId = makar();
+      keyboardLayoutId = checkingForLayoutLanguage();
     } while (keyboardLayoutId != 1033);
     // printf("ang=%d\n",keyboardLayoutId);
   }
@@ -450,12 +477,12 @@ void keyboard(char password[], int i, int registr)
   }
 }
 
-int zapysk(char word[])
+int zapysk(char word1[])
 {
   // void main(){
   // Sleep(1000);
-  //char word[] = "2";
-  //word[0] = word1;
+  char word[] = "2";
+  word[0] = word1;
 
   //  word[1] = "5";
 
@@ -464,9 +491,9 @@ int zapysk(char word[])
     int registr = 0;
     char symbol_now = word[i];
 
-  //  printf("sim=%c\n", symbol_now);
+    //  printf("sim=%c\n", symbol_now);
     int index = (char)symbol_now;
-  //  printf("reg=%d\n", index);
+    //  printf("reg=%d\n", index);
     if (((index == -48) || (index == -47)))
     {
       i++;

@@ -1,0 +1,10 @@
+^C:\USERS\GYMPIE_GYMPIE\DOCUMENTS\GITHUB\FIR\C\BUILD\CMAKEFILES\20C32C631678C23F93CCF6EDC799DC7E\GENERATE.STAMP.RULE
+setlocal
+C:\mingw64\bin\cmake.exe -SC:/Users/Gympie_Gympie/Documents/GitHub/Fir/C -BC:/Users/Gympie_Gympie/Documents/GitHub/Fir/C/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Gympie_Gympie/Documents/GitHub/Fir/C/build/GTKTutorial.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

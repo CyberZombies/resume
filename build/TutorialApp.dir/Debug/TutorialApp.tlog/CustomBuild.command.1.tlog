@@ -1,0 +1,10 @@
+^C:\USERS\GYMPIE_GYMPIE\DOCUMENTS\GITHUB\FIR\C\CMAKELISTS.TXT
+setlocal
+C:\mingw64\bin\cmake.exe -SC:/Users/Gympie_Gympie/Documents/GitHub/Fir/C -BC:/Users/Gympie_Gympie/Documents/GitHub/Fir/C/build --check-stamp-file C:/Users/Gympie_Gympie/Documents/GitHub/Fir/C/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
